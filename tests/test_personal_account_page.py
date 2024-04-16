@@ -33,6 +33,6 @@ class TestPersonalAccountPage:
         page = PersonalAccountPage(driver)
         page.personal_account_login(user_data.get("email"), user_data.get("password"))
         page.go_to_personal_account()
-        result = page.click_on_exit_button
+        page.click_on_exit_button()
 
-        assert result
+        assert page.check_login_button()

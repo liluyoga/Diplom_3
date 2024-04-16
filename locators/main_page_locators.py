@@ -2,6 +2,11 @@ from selenium.webdriver.common.by import By
 
 
 class MainPageLocators:
+    PERSONAL_ACCOUNT_LINK = [By.XPATH,
+                             ".//p[contains(@class, 'AppHeader_header__linkText') and text()='Личный Кабинет']"]
+    CONSTRUCTOR_BUTTON = [By.XPATH, ".//p[contains(@class, 'AppHeader_header__linkText') and text()='Конструктор']"]
+    ORDER_FEED_BUTTON = [By.XPATH, ".//p[contains(@class, 'AppHeader_header__linkText') and text()='Лента Заказов']"]
+
     BUTTON_PLACE_ORDER = [By.XPATH,
                           ".//button[contains(@class, 'button_button_size_large') and text()='Оформить заказ']"]
     LABEL_BUILD_BURGER = [By.XPATH, ".//h1[text()='Соберите бургер']"]

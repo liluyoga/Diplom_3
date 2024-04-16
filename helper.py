@@ -1,4 +1,5 @@
 import json
+import random
 
 import allure
 import requests
@@ -20,3 +21,10 @@ def create_order_by_api(user_data):
                           data=json.dumps(TestData.order_data))
     number = order.json()["order"]["number"]
     return f'#0{number}'
+
+
+def generate_new_user_data():
+    user_data = {"email": f'morty{random.randint(0, 99)}@yandex.ru',
+                 "password": f'{random.randint(100000, 999999)}',
+                 "name": 'Морти'}
+    return user_data

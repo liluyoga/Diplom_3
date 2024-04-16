@@ -1,7 +1,6 @@
 import allure
 
 from data import TestData
-from locators.header_page_locators import HeaderPageLocators
 from locators.restore_password_page_locators import RestorePasswordPageLocators
 from pages.base_page import BasePage
 
@@ -10,7 +9,7 @@ class RestorePasswordPage(BasePage):
 
     @allure.step("Кликаем на Личный кабинет и затем на ссылку Восстановить пароль")
     def click_on_restore_password_link_from_personal_account(self):
-        self.click_on_element(HeaderPageLocators.PERSONAL_ACCOUNT_LINK)
+        self.click_on_element(RestorePasswordPageLocators.PERSONAL_ACCOUNT_LINK)
         self.click_on_element(RestorePasswordPageLocators.RESTORE_PASSWORD_LINK)
 
     @allure.step("Вводим почту в поле Email и кликаем по кнопке Восстановить")

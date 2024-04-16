@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOption
 from selenium.webdriver.firefox.options import Options as FirefoxOption
 
 from data import TestData
+from helper import generate_new_user_data, create_order_by_api
 
 
 def pytest_addoption(parser):
@@ -37,7 +38,7 @@ def driver(request):
         driver = webdriver.Chrome(options=chrome_option)
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
-    driver.get('https://stellarburgers.nomoreparties.site/')
+    driver.get(TestData.URL)
     yield driver
     driver.quit()
 
@@ -45,7 +46,7 @@ def driver(request):
 @allure.step("Генерация и регистрация нового пользователя")
 @pytest.fixture(scope='function')
 def register_new_user():
-    user_data = TestData.generate_new_user_data()
+    user_data = generate_new_user_data()
     response = requests.post(TestData.URL_API_REGISTER, headers={"Content-type": "application/json"},
                              data=json.dumps(user_data))
     token = response.json()["accessToken"]
@@ -53,19 +54,10 @@ def register_new_user():
     requests.delete(TestData.URL_API_USER, headers={"Authorization": f'{token}'})
 
 
-@allure.step("Регистрация пользователя и создание заказа")
+@allure.step("Создание заказа авторизованным пользователем")
 @pytest.fixture(scope='function')
 def create_order(register_new_user):
     user_data = register_new_user
-    payload = {
-        "email": user_data.get("email"),
-        "password": user_data.get("password")
-    }
-    response = requests.post(TestData.URL_API_LOGIN, headers={"Content-type": "application/json"},
-                             data=json.dumps(payload))
-    token = response.json()["accessToken"]
-    order = requests.post(TestData.URL_API_PLACE_ORDER,
-                          headers={"Content-type": "application/json", "Authorization": f'{token}'},
-                          data=json.dumps(TestData.order_data))
-    number = order.json()["order"]["number"]
-    yield user_data, f'#0{number}'
+    number = create_order_by_api(user_data)
+
+    return user_data, number

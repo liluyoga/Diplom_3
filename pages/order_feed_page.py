@@ -1,19 +1,13 @@
 import allure
 
-from locators.header_page_locators import HeaderPageLocators
 from locators.order_feed_page_locators import OrderFeedPageLocators
 from pages.base_page import BasePage
 
 
 class OrderFeedPage(BasePage):
 
-    @allure.step("Кликаем на Ленту заказов")
-    def click_on_order_feed(self):
-        self.click_on_element(HeaderPageLocators.ORDER_FEED_BUTTON)
-
     @allure.step("Кликаем на Ленту заказов и на Заказ")
     def click_on_order_in_order_feed(self):
-        self.click_on_element(HeaderPageLocators.ORDER_FEED_BUTTON)
         self.click_on_element(OrderFeedPageLocators.ORDER)
 
     @allure.step("Проверка, что открылось всплывающее окно с деталями заказа")

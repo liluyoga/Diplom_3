@@ -29,7 +29,6 @@ class BasePage:
         current_url = self.driver.current_url
         return current_url
 
-
     def drag_and_drop(self, locator_1, locator_2):
         ingredient = self.find_element_with_waiting(locator_1)
         basket = self.find_element_with_waiting(locator_2)
